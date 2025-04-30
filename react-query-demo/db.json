@@ -1,0 +1,19 @@
+{
+    "superheroes": [
+        {
+            "id": 1,
+            "title": "Sundar Pichai Interview",
+            "body": "Discussing The Future of Tech"
+        },
+        {
+            "id": 2,
+            "name": "Marques Reviews Tesla",
+            "alterEgo": "Tesla's latest EV review"
+        },
+        {
+            "id": 3,
+            "name": "AI in 2024",
+            "alterEgo": "Impact on daily life"
+        }
+    ]
+}
