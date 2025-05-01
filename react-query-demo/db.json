@@ -1,5 +1,5 @@
 {
-    "superheroes": [
+    "posts": [
         {
             "id": 1,
             "title": "Sundar Pichai Interview",
@@ -7,13 +7,19 @@
         },
         {
             "id": 2,
-            "name": "Marques Reviews Tesla",
-            "alterEgo": "Tesla's latest EV review"
+            "title": "Sundar Pichai Interview",
+            "body": "Discussing The Future of Tech"
         },
         {
             "id": 3,
-            "name": "AI in 2024",
-            "alterEgo": "Impact on daily life"
+            "title": "Sundar Pichai Interview",
+            "body": "Discussing The Future of Tech"
+        }
+    ], 
+    "todos": [
+        {
+            "id": "1",
+            "title": "Go to the Dcotor"
         }
     ]
 }
