@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 // react query cache:
-  // react query store the data in cache for 5 minutes
+  // react query store the data in cache using the queryKey as a unique key for 5 minutes
   // but data in cache might be outdated, data in json server might have been updated, in this case, the react query doing the refetch in the backgroud, if it is updated, reflect on UI
   // isLoading is true when there is no cache for the data, but if there is, isLoading is false.
   // isFetching is true when you are fetching or refetching. no matter if there is cache for data.
