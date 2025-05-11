@@ -13,15 +13,24 @@ import axios from "axios";
   // so this caused background refetch from the endpoint is triggered all the time when we click this page.
   // if I am a software developer and I know db data is not gonna change often, then I can configure it by staleTime myself
   // as long as the mode is in fresh, it wont trigger refetch during time we set. **
-const PostsRQ = () => {
+// polling can be beneficial if a application require netword request(e.g. data in UI has to be updated every 1/3/5/10 seconds)
+  // react query makes it easy to pull data at intervals of time by configure "refetchInterval", 1000 means refetch data every 1 second
+  // polling only continues if current tab is onFocus. if you switch to the other tab it stops refetch
+  // if you want even if user switch to the other tab and the polling is still working, then "refetchIntervalInBackgroud" = true is needed.
+  const PostsRQ = () => {
   // useQuery hook returns a object contains many different fields including data, isLoading, isError, error....
   const { data, isLoading, isError, error, isFetching } = useQuery({
     queryKey: ["posts"], // this must be unique
     queryFn: () => {
       return axios.get("http://localhost:4000/posts");
     }, // a function alwasy returns a promise
+
+
     // how long in miliseconds it is frech data then become stale(outdated), default to be 0
-    staleTime: 10000 // 10 seconds
+    // staleTime: 10000 // 10 seconds
+
+    // take value in milliseconds. default set to false. means no interval refetch
+    refetchInterval: 1000
   });
 
   console.log({isLoading, isFetching});
