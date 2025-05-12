@@ -17,9 +17,13 @@ import axios from "axios";
   // react query makes it easy to pull data at intervals of time by configure "refetchInterval", 1000 means refetch data every 1 second
   // polling only continues if current tab is onFocus. if you switch to the other tab it stops refetch
   // if you want even if user switch to the other tab and the polling is still working, then "refetchIntervalInBackgroud" = true is needed.
+// useQuery fetch data bny clicking on a button:
+  // if you switch to a different tab(this means going out of focus) and switch back too app page(coming back of focus so it triggered network reuqest/refetch)
+  // 
+
   const PostsRQ = () => {
   // useQuery hook returns a object contains many different fields including data, isLoading, isError, error....
-  const { data, isLoading, isError, error, isFetching } = useQuery({
+  const { data, isLoading, isError, error, isFetching, refetch } = useQuery({
     queryKey: ["posts"], // this must be unique
     queryFn: () => {
       return axios.get("http://localhost:4000/posts");
@@ -30,7 +34,12 @@ import axios from "axios";
     // staleTime: 10000 // 10 seconds
 
     // take value in milliseconds. default set to false. means no interval refetch
-    refetchInterval: 1000
+    // refetchInterval: 1000
+
+    // disable automatic refetching when the query mounts(component mounts: when we go to the page the component gets rendered) or changes query keys.
+      // once its disabled, when we get to the page or get back to the page, wont trigger automatic refetch
+      // so we need to refertch manually
+    enabled: false
   });
 
   console.log({isLoading, isFetching});
@@ -51,15 +60,18 @@ import axios from "axios";
     // fetch from /posts/2 => set key = ["posts", 2] or ["posts", post.id]
     // /posts/1/comments => ["posts", post.id, "comments"]
     <div className="post-list">
+      <button onClick={refetch}>
+        Fetch Posts
+      </button>
       {data.data.map((post) => {
         return (
-          <div className="post-item" key={post.id}>
-            <h3 className="post-title">{post.title}</h3>
-            <p className="post-body">{post.body}</p>
-          </div>
+            <div className="post-item" key={post.id}>
+              <h3 className="post-title">{post.title}</h3>
+              <p className="post-body">{post.body}</p>
+            </div>
         );
       })}
-    </div>
+    </div> 
   );
 };
 
