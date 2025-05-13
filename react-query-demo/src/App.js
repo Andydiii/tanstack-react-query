@@ -3,6 +3,7 @@ import PostsTraditional from './components/PostTraditional';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import PostsRQ from './components/PostsRQ';
 import Home from './components/Home';
+import {PostDetailsRQ} from './components/PostDetailsRQ'
 
 function App() {
 
@@ -27,6 +28,8 @@ function App() {
           <Route exact path='/' element={<Home />} />
           <Route exact path='/posts' element={<PostsTraditional />} />
           <Route exact path='/rq-posts' element={<PostsRQ />} />
+          {/* :postId means postId is a parameter, /rq-posts/1 -> postId = 1 */}
+          <Route exact path='/rq-posts/:postId' element={<PostDetailsRQ/>}></Route>
         </Routes>
 
       </div>

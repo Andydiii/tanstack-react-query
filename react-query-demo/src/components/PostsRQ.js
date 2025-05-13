@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { Link, Links } from "react-router-dom";
 
 // react query cache:
   // react query store the data in cache using the queryKey as a unique key for 5 minutes
@@ -39,7 +40,7 @@ import axios from "axios";
     // disable automatic refetching when the query mounts(component mounts: when we go to the page the component gets rendered) or changes query keys.
       // once its disabled, when we get to the page or get back to the page, wont trigger automatic refetch
       // so we need to refertch manually
-    enabled: false
+    // enabled: false
   });
 
   console.log({isLoading, isFetching});
@@ -60,15 +61,17 @@ import axios from "axios";
     // fetch from /posts/2 => set key = ["posts", 2] or ["posts", post.id]
     // /posts/1/comments => ["posts", post.id, "comments"]
     <div className="post-list">
-      <button onClick={refetch}>
+      {/* <button onClick={refetch}>
         Fetch Posts
-      </button>
+      </button> */}
       {data.data.map((post) => {
         return (
+          <Link to={`/rq-posts/${post.id}`}>
             <div className="post-item" key={post.id}>
               <h3 className="post-title">{post.title}</h3>
               <p className="post-body">{post.body}</p>
             </div>
+          </Link>
         );
       })}
     </div> 
@@ -76,3 +79,8 @@ import axios from "axios";
 };
 
 export default PostsRQ;
+
+
+// create a RQPostDetails 
+// configuring the route for the newly created page - (rq-posts/{postId})
+// wrapping each item with the <a> tag
