@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import PostsRQ from './components/PostsRQ';
 import Home from './components/Home';
 import {PostDetailsRQ} from './components/PostDetailsRQ'
+import PaginatedQueries from './components/PaginatedQueries';
 
 function App() {
 
@@ -30,8 +31,8 @@ function App() {
           <Route exact path='/rq-posts' element={<PostsRQ />} />
           {/* :postId means postId is a parameter, /rq-posts/1 -> postId = 1 */}
           <Route exact path='/rq-posts/:postId' element={<PostDetailsRQ/>}></Route>
+          <Route exact path='/paginated-fruits' element={<PaginatedQueries />}></Route>
         </Routes>
-
       </div>
     </BrowserRouter>
   )
