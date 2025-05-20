@@ -7,6 +7,7 @@ function fetchFruits(pageId) {
     return axios.get(`http://localhost:4000/fruits?_page=${pageId}&_per_page=4`);
 }
 
+// press nextPage button goes to next page, press previousPage goes back to previous page.
 export default function PaginatedQueries() {
 
     const [page, setPage] = useState(1);
