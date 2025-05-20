@@ -23,60 +23,60 @@ import { Link, Links } from "react-router-dom";
   // 
 
   const PostsRQ = () => {
-  // useQuery hook returns a object contains many different fields including data, isLoading, isError, error....
-  const { data, isLoading, isError, error, isFetching, refetch } = useQuery({
-    queryKey: ["posts"], // this must be unique
-    queryFn: () => {
-      return axios.get("http://localhost:4000/posts");
-    }, // a function alwasy returns a promise
+    // useQuery hook returns a object contains many different fields including data, isLoading, isError, error....
+    const { data, isLoading, isError, error, isFetching, refetch } = useQuery({
+      queryKey: ["posts"], // this must be unique
+      queryFn: () => {
+        return axios.get("http://localhost:4000/posts");
+      }, // a function alwasy returns a promise
 
 
-    // how long in miliseconds it is frech data then become stale(outdated), default to be 0
-    // staleTime: 10000 // 10 seconds
+      // how long in miliseconds it is frech data then become stale(outdated), default to be 0
+      // staleTime: 10000 // 10 seconds
 
-    // take value in milliseconds. default set to false. means no interval refetch
-    // refetchInterval: 1000
+      // take value in milliseconds. default set to false. means no interval refetch
+      // refetchInterval: 1000
 
-    // disable automatic refetching when the query mounts(component mounts: when we go to the page the component gets rendered) or changes query keys.
-      // once its disabled, when we get to the page or get back to the page, wont trigger automatic refetch
-      // so we need to refertch manually
-    // enabled: false
-  });
+      // disable automatic refetching when the query mounts(component mounts: when we go to the page the component gets rendered) or changes query keys.
+        // once its disabled, when we get to the page or get back to the page, wont trigger automatic refetch
+        // so we need to refertch manually
+      // enabled: false
+    });
 
-  console.log({isLoading, isFetching});
+    console.log({isLoading, isFetching});
 
-  if (isLoading) {
-    return <div>Page is loading...</div>;
-  }
+    if (isLoading) {
+      return <div>Page is loading...</div>;
+    }
 
-  if (isError) {
-    return <div> {error.message} </div>;
-  }
+    if (isError) {
+      return <div> {error.message} </div>;
+    }
 
-  
+    
 
-  return (
-    // we fetch from /posts endpoint, => set key as ["posts"]
-    // fetch from /posts/1 => set key = ["posts", 1] or ["posts", post.id]
-    // fetch from /posts/2 => set key = ["posts", 2] or ["posts", post.id]
-    // /posts/1/comments => ["posts", post.id, "comments"]
-    <div className="post-list">
-      {/* <button onClick={refetch}>
-        Fetch Posts
-      </button> */}
-      {data.data.map((post) => {
-        return (
-          <Link to={`/rq-posts/${post.id}`}>
-            <div className="post-item" key={post.id}>
-              <h3 className="post-title">{post.title}</h3>
-              <p className="post-body">{post.body}</p>
-            </div>
-          </Link>
-        );
-      })}
-    </div> 
-  );
-};
+    return (
+      // we fetch from /posts endpoint, => set key as ["posts"]
+      // fetch from /posts/1 => set key = ["posts", 1] or ["posts", post.id]
+      // fetch from /posts/2 => set key = ["posts", 2] or ["posts", post.id]
+      // /posts/1/comments => ["posts", post.id, "comments"]
+      <div className="post-list">
+        {/* <button onClick={refetch}>
+          Fetch Posts
+        </button> */}
+        {data.data.map((post) => {
+          return (
+            <Link to={`/rq-posts/${post.id}`}>
+              <div className="post-item" key={post.id}>
+                <h3 className="post-title">{post.title}</h3>
+                <p className="post-body">{post.body}</p>
+              </div>
+            </Link>
+          );
+        })}
+      </div> 
+    );
+  };
 
 export default PostsRQ;
 
