@@ -6,7 +6,7 @@ import Home from './components/Home';
 import {PostDetailsRQ} from './components/PostDetailsRQ'
 import PaginatedQueries from './components/PaginatedQueries';
 import { InfiniteFruits } from './components/InfiniteFruits';
-
+import { InfiniteFruitsScroll2 } from './components/InfiniteFruitsScroll2';
 function App() {
 
   return (
@@ -33,7 +33,8 @@ function App() {
           {/* :postId means postId is a parameter, /rq-posts/1 -> postId = 1 */}
           <Route exact path='/rq-posts/:postId' element={<PostDetailsRQ/>}></Route>
           <Route exact path='/paginated-fruits' element={<PaginatedQueries />}></Route>
-          <Route exact path='/infinite-fruits' element={<InfiniteFruits />}></Route>
+          <Route exact path='/infinite-fruits-scroll1' element={<InfiniteFruits />}></Route>
+          <Route exact path='/infinite-fruits-scroll2' element={<InfiniteFruitsScroll2 />}></Route>
         </Routes>
       </div>
     </BrowserRouter>

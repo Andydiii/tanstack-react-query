@@ -1,11 +1,12 @@
 import React from "react";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
 
 // you press loadmore it gives you one more page accumulatively
-export function InfiniteFruits() {
-    const {data, isLoading, isError, error, fetchNextPage, hasNextPage} = useInfiniteQuery({
+export function InfiniteFruitsScroll2() {
+    const {data, isLoading, isError, error, fetchNextPage, hasNextPage, isFetchingNextPage} = useInfiniteQuery({
         queryKey: ["Fruits"], // dont need to do ["Fruits", page] here, probably because it is appending new data to the existing data in cache
         queryFn: ({pageParam}) => {
             return axios.get(`http://localhost:4000/fruits?_page=${pageParam}&_per_page=10`)
@@ -19,7 +20,7 @@ export function InfiniteFruits() {
         getNextPageParam: (lastPage, allPages) => {
             // 20 items
             // at any page we show 4 items, so 5 pages 
-            if (allPages.length < 5) {
+            if (allPages.length < 6) {
                 return allPages.length + 1
             } else {
                 return undefined
@@ -27,7 +28,13 @@ export function InfiniteFruits() {
         }
     })
 
-    // console.log(data)
+    const { ref, inView } = useInView();
+
+    useEffect(() => {
+        if (inView) {
+            fetchNextPage();
+        }
+    }, [inView, fetchNextPage])
 
     if (isLoading) {
         return <div>Page is loading....</div>
@@ -49,9 +56,10 @@ export function InfiniteFruits() {
                     )
                 })
             })}
-            <button onClick={fetchNextPage} disabled={!hasNextPage}>
-                loadMore...
-            </button>
+            {/* whenever the div comee into the viewport, it will trigger the fetchNextPage */}
+            <div ref={ref}>
+                {isFetchingNextPage ? "Loading..." : null}
+            </div>
         </div>
 
     );
