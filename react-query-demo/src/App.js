@@ -7,6 +7,7 @@ import {PostDetailsRQ} from './components/PostDetailsRQ'
 import PaginatedQueries from './components/PaginatedQueries';
 import { InfiniteFruits } from './components/InfiniteFruits';
 import { InfiniteFruitsScroll2 } from './components/InfiniteFruitsScroll2';
+import PostsRQMutation1 from './components/PostsRQMutation1';
 function App() {
 
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route exact path='/paginated-fruits' element={<PaginatedQueries />}></Route>
           <Route exact path='/infinite-fruits-scroll1' element={<InfiniteFruits />}></Route>
           <Route exact path='/infinite-fruits-scroll2' element={<InfiniteFruitsScroll2 />}></Route>
+          <Route exact path='/rq-posts-mutation1' element={<PostsRQMutation1 />}></Route>
         </Routes>
       </div>
     </BrowserRouter>
