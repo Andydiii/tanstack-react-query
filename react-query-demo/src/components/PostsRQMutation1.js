@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { Form, Link, Links } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 
 // GET method
@@ -19,6 +20,8 @@ const PostsRQMutation1 = () => {
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
 
+    const queryClient = useQueryClient();
+
     const { data, isLoading, isError, error, isFetching, refetch } = useQuery({
         queryKey: ["posts"], 
         queryFn: fetchPosts
@@ -26,7 +29,31 @@ const PostsRQMutation1 = () => {
 
     // kind of like we initialize the mutation and then we can use it later. so when we call mutate, it will call the addPost function
     const { mutate } = useMutation({
-        mutationFn: addPost // similar to useQuery queryFn, this is mandatory to define.the function has to return a promise
+        mutationFn: addPost, // similar to useQuery queryFn, this is mandatory to define. the function has to return a promise. the addPost is making a post request to add new data into server.
+        
+        // we posted new data onto server, but hasnt refetch it yet.
+        onSuccess: (newData) => {
+            // first way: queryClient.invalidateQueries("posts") 
+                // once mutate is finished, it cause refetching the latest data from json server, and data changed caused rerender.
+                // cons: this will refetch the whole list of data.
+                // we can directly add the new data into cache
+                // note newData is not used in this method
+
+
+            // second way: update the data in cache with key "Posts"
+            // we use newDate as param for the new data we wanna add
+            console.log(newData);
+            queryClient.setQueryData(["posts"], (oldQueryData) => {                
+                return {
+                    ...oldQueryData,
+                    data: [
+                        ...oldQueryData.data,
+                        newData.data
+                    ]
+                }
+            })
+ 
+        }
     });
 
     const handleSubmit = (e) => {
